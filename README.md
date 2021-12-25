@@ -43,11 +43,30 @@ library(lsa)
 
 ## Categorization
 
-TODO
+### Import data
+Download raw data, "data - Probability per Scenario", in [.txt](https://raw.githubusercontent.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/main/data%20-%20Probability%20per%20Scenario.txt) or [.csv format](https://raw.githubusercontent.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/main/data%20-%20Probability%20per%20Scenario.csv) and run the following in R to import the data:
+
+``` r
+# a) if in .txt:
+data <- read.delim(file.choose())
+# b) if in .csv:
+data <- read.csv(file.choose(), sep = ";")
+```
+
+Let's review the dataset:
+
+``` r
+> str(data)
+'data.frame':	26 obs. of  3 variables:
+ $ scenario: chr  "(Reimer, 1991a, pp. 190–191)" "(Perry, 2017, p. 979)" "(Siegel, 2002, pp. 10–11)" "(McGinn, 1981, p. 162)" ...
+ $ ND      : int  3 6 1 2 1 6 3 6 5 8 ...
+ $ PD      : int  5 2 7 6 7 2 5 2 3 0 ...
+```
+The dataset consists of 
 
 ## Analysis of the Contingency Table
 
-TODO
+TODO (mention: two categorical variables, justification of choosing the tests)
 
 ## Similarity Between Coders (or Lack Thereof)
 
