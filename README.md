@@ -64,7 +64,7 @@ Let's review the dataset:
 ```
 The dataset consists of the variable `scenario` that holds the citations in an (author, year, page numbers) format. To view the list of references from which the citations come, see the last page of [**Discrepancy Coding Results**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/Discrepancy%20Coding%20Results.pdf). Column `ND` corresponds to "**No discrepancy [-_d_] between actual demonstration and intended referent**" response on the Discrepancy Coding Form, while column `PD` tracks "**Possible discrepancy [+_d_] between actual demonstration and intended referent**". For example, the scenario adapted from (Reimer, 1991a, pp. 190–191) was categorized as **[-_d_]** scenario by 3 coders and as **[+_d_]** by 5 coders.
 
-Given the nature of the Coding Procedure and the character of the variables `ND` and `PD`, it can be stated that the dataset consists of categorical variables.
+Given the nature of the Coding Procedure and the character of the variables `ND` and `PD`, it can be stated that the dataset is of caterogical type.
 
 ### Compute the probabilities of categorizing the given scenarios
 
