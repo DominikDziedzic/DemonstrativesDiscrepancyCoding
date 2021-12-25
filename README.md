@@ -62,7 +62,7 @@ Let's review the dataset:
  $ ND      : int  3 6 1 2 1 6 3 6 5 8 ...
  $ PD      : int  5 2 7 6 7 2 5 2 3 0 ...
 ```
-The dataset consists of 
+The dataset consists of the variable `scenario` that holds the citations in an (author, year, page numbers) format. To view the list of references from which the citations come, see the last page of [**Discrepancy Coding Results**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/Discrepancy%20Coding%20Results.pdf). Column `ND` corresponds to "**No discrepancy [-_d_] between actual demonstration and intended referent**" response on the Discrepancy Coding Form, while column `PD` tracks "**Possible discrepancy [+_d_] between actual demonstration and intended referent**".
 
 ## Analysis of the Contingency Table
 
