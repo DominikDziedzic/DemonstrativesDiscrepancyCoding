@@ -15,11 +15,9 @@ To view the form that the coders were requested to fill in, visit:
 
 Content of the repository (after opening each file, right-click and select Save as):
 - **Raw data** 
-  - data - Probability per Scenario [in .txt](https://raw.githubusercontent.com/DominikDziedzic/PilotStudySampling/main/data.txt) or [.csv format]() 
-  - data - Probability per Coder [in .txt]() or [.csv format](https://raw.githubusercontent.com/DominikDziedzic/PilotStudySampling/main/data.csv)
-- **Source code in .R**
-  - [Frequentist and Bayesian Linear Regression](https://raw.githubusercontent.com/DominikDziedzic/PilotStudySampling/main/Analysis%2C%20Frequentist%20and%20Bayesian%20Linear%20Regression.R)
-  - [Mediation Analysis](https://raw.githubusercontent.com/DominikDziedzic/PilotStudySampling/main/Analysis%2C%20Mediation.R)
+  - data - Probability per Scenario [in .txt](https://raw.githubusercontent.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/main/data%20-%20Probability%20per%20Scenario.txt) or [.csv format](https://raw.githubusercontent.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/main/data%20-%20Probability%20per%20Scenario.csv) 
+  - data - Probability per Coder [in .txt](https://raw.githubusercontent.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/main/data%20-%20Probability%20per%20Coder.txt) or [.csv format](https://raw.githubusercontent.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/main/data%20-%20Probability%20per%20Coder.csv)
+- [**Source code in .R**]()
 - [**Categorization**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#categorization)
 - [**Analysis of the Contingency Table**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding#analysis-of-the-contingency-table)
 - [**Similarity Between Coders (or Lack Thereof)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding#similarity-between-coders-or-lack-thereof)
