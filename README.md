@@ -4,8 +4,8 @@ Repository for storing supplementary materials and data to accompany "TODO: TITL
 The results of the Discrepancy Coding Procedure are presented and discussed. The Procedure is a part of Demonstratives: Main Study. The task discussed in the Main Study was the following: a sample of scenarios, in which utterances of ordinary demonstrative sentences are made, was presented to participants; each sentence was presented as either true or false in the described context. The study aimed to measure participants’ subjective beliefs regarding the nature of the stimuli and the effectiveness of experimental manipulation. The sample in the Main Study consists of TODO: NUMBER scenarios. However, the initial sample consisted of 26 scenarios. 
 
 This repository is concerned primarily with the results of the following coding task: a team of 8 professional philosophers (4 Ph.D.'s and 4 Ph.D. candidates with interest in semantics and indexicality in particular; excluding the author of the current study) categorized the stimuli into two categories:
-- **Possible discrepancy [+d] between actual demonstration and intended referent**,
-- **No discrepancy [-d] between actual demonstration and intended referent**.
+- **Possible discrepancy [+_d_] between actual demonstration and intended referent**,
+- **No discrepancy [-_d_] between actual demonstration and intended referent**.
 
 To view the form that the coders were requested to fill in, visit:
 - [**Discrepancy Coding Results**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/Discrepancy%20Coding%20Results.pdf) (contains the results and coders' comments on each of the stimulus) or
