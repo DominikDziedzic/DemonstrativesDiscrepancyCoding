@@ -21,10 +21,25 @@ Content of the repository (after opening each file, right-click and select Save 
 - [**Categorization**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#categorization)
 - [**Analysis of the Contingency Table**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding#analysis-of-the-contingency-table)
 - [**Similarity Between Coders (or Lack Thereof)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding#similarity-between-coders-or-lack-thereof)
+- [**References**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding#references)
 
 ## Required Packages
 
-TODO
+Run the following code in R to install the required packages:
+``` r
+install.packages("ggplot2")
+install.packages("dplyr")
+install.packages("tidyverse")
+install.packages("lsa")
+```
+
+Load the required packages:
+``` r
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+library(lsa)
+```
 
 ## Categorization
 
@@ -37,3 +52,15 @@ TODO
 ## Similarity Between Coders (or Lack Thereof)
 
 TODO
+
+## References
+- McHugh, Mary L. (2013). The Chi-Square Test of Independence. _Biochemia Medica_, _23_(2), 143–149. doi:10.11613/bm.2013.018
+- Müller, K., Wickham, H. (2021). tibble: Simple Data Frames. R package version 3.1.2. https://CRAN.R-project.org/package=tibble
+- R Core Team (2021). R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
+- Wickham, H. (2016). ggplot2: Elegant Graphics for Data Analysis. New York: Springer-Verlag.
+- Wickham, H. (2019). stringr: Simple, Consistent Wrappers for Common String Operations. R package version 1.4.0. https://CRAN.R-project.org/package=stringr
+- Wickham, H. (2021). forcats: Tools for Working with Categorical Variables (Factors). R package version 0.5.1. https://CRAN.R-project.org/package=forcats
+- Wickham, H. (2021). tidyr: Tidy Messy Data. R package version 1.1.3. https://CRAN.R-project.org/package=tidyr
+- Wickham H., François, R., Henry, L., Müller, K. (2021). dplyr: A Grammar of Data Manipulation. R package version 1.0.6. https://CRAN.R-project.org/package=dplyr
+- Wickham et al., (2019). Welcome to the tidyverse. _Journal of Open Source Software_, _4_(43), 1686, https://doi.org/10.21105/joss.01686
+- Wild, F. (2020). lsa: Latent Semantic Analysis. R package version 0.73.2. https://CRAN.R-project.org/package=lsa
