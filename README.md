@@ -120,11 +120,71 @@ data.sort <- data[with(data, order(data$prob.PD, scenario)),]
 ### Plot (26)
 
 ![Categorization output (26)](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/Output/Plot%20(26).png)
-TODO: Description
+TODO: Description.
 
 ## Analysis of the Contingency Table (26)
 
-TODO (mention: two categorical variables, justification of choosing the tests)
+In what follows, the chi-square and Fisher's exact tests are conducted to determine whether there is an association between two categorical variables: i) the categories assigned by the respondents during the coding process (i.e., data$PD), and ii) the categories shown on the plot (i.e., data$prob.thresholds). The two variables are likely to be statistically related, obviously.
+
+Let us address the following question first: How to proceed with scenarios that were categorized as ND as often as they were as PD during the coding process? There are two such scenarios:
+
+```r
+> data$scenario[which(data$prob.thresholds == 0.5)]
+[1] "(Reimer, 1991b, p. 180)" "(Perry, 2009, p. 193)"
+```
+
+One of them is (Reimer, 1991b, p. 180), the other: (Perry, 2009, p. 193).
+``` r
+Reimer <- which(data$scenario == "(Reimer, 1991b, p. 180)")
+Perry <- which(data$scenario == "(Perry, 2009, p. 193)")
+```
+Does it make a difference if these two scenarios fall into ND or PD category? Let us consider 4 possibilities: i) both into ND, ii) Reimer's into ND, Perry's into PD, iii) vice versa, iv) both into PD.
+
+``` r
+> for (i in 1:4){
++   col.tmp <- paste0("prob.thresholds", i)
++   data[, col.tmp] <- data$prob.thresholds
++ }
+> 
+> {
++   data$prob.thresholds1[Reimer] <- 0 # i)
++   data$prob.thresholds1[Perry] <- 0
++   data$prob.thresholds2[Reimer] <- 0 # ii)
++   data$prob.thresholds2[Perry] <- 1
++   data$prob.thresholds3[Reimer] <- 1 # iii)
++   data$prob.thresholds3[Perry] <- 0
++   data$prob.thresholds4[Reimer] <- 1 # iV)
++   data$prob.thresholds4[Perry] <- 1
++ }
+```
+Create datasets to store the p-values of the tests performed on the i)-iv).
+
+``` r
+> chi.values <- data.frame(matrix("", ncol = 0, nrow = 1))
+> fisher.values <- data.frame(matrix("", ncol = 0, nrow = 1))
+> 
+> for (i in 1:4){
++   col.tmp <- paste0("prob.thresholds", i)
++   data[, col.tmp] <- droplevels(data[, col.tmp]) # Clean the variables
++   
++   dat.tmp <- data[,c(3,7+i)]
++   tab.tmp <- table(dat.tmp) # Construct contingency tables
++   chi.tmp <- chisq.test(tab.tmp) # Perform chi-square tests
++   Fisher.tmp <- fisher.test(tab.tmp) # Perform Fisher's Exact Test
++   
++   col.tmp <- paste0("Chisq", i, "[p-value", i, "]")
++   chi.values[, col.tmp] <- chi.tmp$p.value # Store the p-values of the tests
++   
++   col.tmp <- paste0("FET", i, "[p-value", i, "]")
++   fisher.values[, col.tmp] <- Fisher.tmp$p.value
++ }
+Warning messages:
+1: In chisq.test(tab.tmp) : Chi-squared approximation may be incorrect
+2: In chisq.test(tab.tmp) : Chi-squared approximation may be incorrect
+3: In chisq.test(tab.tmp) : Chi-squared approximation may be incorrect
+4: In chisq.test(tab.tmp) : Chi-squared approximation may be incorrect
+```
+
 
 ## Similarity Between Coders - or Lack Thereof (26)
 
