@@ -124,7 +124,7 @@ TODO: Description.
 
 ## Analysis of the Contingency Table (26)
 
-In what follows, the chi-square and Fisher's exact tests are conducted to determine whether there is an association between two categorical variables: i) the categories assigned by the respondents during the coding process (i.e., data$PD), and ii) the categories shown on the plot (i.e., data$prob.thresholds). The two variables are likely to be statistically related, obviously.
+In what follows, the chi-square and Fisher's exact tests are conducted to determine whether there is an association between two categorical variables: i) the categories assigned by the respondents during the coding process (i.e., `PD`), and ii) the categories shown on the plot (i.e., `prob.thresholds`). The two variables are likely to be statistically related, obviously.
 
 Let us address the following question first: How to proceed with scenarios that were categorized as ND as often as they were as PD during the coding process? There are two such scenarios:
 
@@ -185,6 +185,17 @@ Warning messages:
 4: In chisq.test(tab.tmp) : Chi-squared approximation may be incorrect
 ```
 
+Display the p-values.
+
+``` r
+> chi.values %>% round(5)
+  Chisq1[p-value1] Chisq2[p-value2] Chisq3[p-value3] Chisq4[p-value4]
+1            5e-04          0.00119          0.00119            5e-04
+```
+
+As expected, the two variables are statistically related; that is, there is enough evidence to suggest an association between `prob.tresholds` (as specified on the plot) and the categories assigned by the coders regardless of whether the borderline cases are categorized as ND or PD (p-value < 0.005).
+
+TODO
 
 ## Similarity Between Coders - or Lack Thereof (26)
 
