@@ -19,13 +19,13 @@ Content of the repository (after opening each file, right-click and select Save 
   - data - Probability per Coder [in .txt](https://raw.githubusercontent.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/main/data%20-%20Probability%20per%20Coder.txt) or [.csv format](https://raw.githubusercontent.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/main/data%20-%20Probability%20per%20Coder.csv)
 - [**Source code in .R**]() TODO
 - **Entire Sample of 26 Scenarios:**
-  - [**Categorization (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#categorization)
-  - [**Analysis of the Contingency Table (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding#analysis-of-the-contingency-table)
-  - [**Similarity Between Coders (or Lack Thereof) (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding#similarity-between-coders-or-lack-thereof)
+  - [**Categorization (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#categorization-26)
+  - [**Analysis of the Contingency Table (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#analysis-of-the-contingency-table-26)
+  - [**Similarity Between Coders - or Lack Thereof (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#similarity-between-coders---or-lack-thereof-26)
 - **Revised Sample of 20 Scenarios:**
-  - [**Categorization (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#categorization)
-  - [**Analysis of the Contingency Table (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding#analysis-of-the-contingency-table)
-  - [**Similarity Between Coders (or Lack Thereof) (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding#similarity-between-coders-or-lack-thereof)
+  - [**Categorization (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#categorization-20)
+  - [**Analysis of the Contingency Table (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#analysis-of-the-contingency-table-20)
+  - [**Similarity Between Coders - or Lack Thereof (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#similarity-between-coders---or-lack-thereof-20)
 - [**References**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding#references)
 
 ## Required Packages
@@ -85,6 +85,39 @@ Find the number of observations.
  $ PD      : int  5 2 7 6 7 2 5 2 3 0 ...
  $ N       : int  8 8 8 8 8 8 8 8 8 8 ...
 ```
+
+Compute the arithmetic means.
+
+``` r
+> data$prob.ND <- data$ND / data$N
+> data$prob.PD <- data$PD / data$N
+> str(data)
+'data.frame':	26 obs. of  6 variables:
+ $ scenario: chr  "(Reimer, 1991a, pp. 190–191)" "(Perry, 2017, p. 979)" "(Siegel, 2002, pp. 10–11)" "(McGinn, 1981, p. 162)" ...
+ $ ND      : int  3 6 1 2 1 6 3 6 5 8 ...
+ $ PD      : int  5 2 7 6 7 2 5 2 3 0 ...
+ $ N       : int  8 8 8 8 8 8 8 8 8 8 ...
+ $ prob.ND : num  0.375 0.75 0.125 0.25 0.125 0.75 0.375 0.75 0.625 1 ...
+ $ prob.PD : num  0.625 0.25 0.875 0.75 0.875 0.25 0.625 0.25 0.375 0 ...
+```
+
+Define some "discrimination thresholds", or simply "thresholds", for later use as the legend keys on the plot.
+
+``` r
+> data$prob.thresholds <- as.factor(ifelse(data$prob.PD < 0.5, "0",
++                                          ifelse(data$prob.PD == 0.5, "0.5", "1")
++                                          ))
+> data$prob.thresholds
+ [1] 1   0   1   1   1   0   1   0   0   0   0   0   0   0.5 0   0   1   1   1   0   1   0   0   0   0   0.5
+Levels: 0 0.5 1
+```
+
+Specify the order in the dataset: increasing PD.
+``` r
+data.sort <- data[with(data, order(data$prob.PD, scenario)),]
+```
+
+### Plot (26)
 
 TODO
 
