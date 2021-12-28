@@ -193,9 +193,63 @@ Display the p-values.
 1            5e-04          0.00119          0.00119            5e-04
 ```
 
-As expected, the two variables are statistically related; that is, there is enough evidence to suggest an association between `prob.tresholds` (as specified on the plot) and the categories assigned by the coders regardless of whether the borderline cases are categorized as ND or PD (p-value < 0.005).
+As expected, the two variables are statistically related; that is, there is enough evidence to suggest an association between `prob.tresholds` (as specified on the plot) and the categories assigned by the coders regardless of whether the borderline cases are categorized as ND or PD (all p-values < 0.005).
 
-TODO
+However, R printed out the following warning messages:
+``` r
+1: In chisq.test(tab.tmp) : Chi-squared approximation may be incorrect
+```
+
+Most likely, this warning is related to the assumption that the expected cell count in the contingency table should be 5 or more in at least 80% of the cells (McHugh, 2013). As can be seen in the last computed table (containing `prob.thresholds4`), this is not the case.
+
+``` r
+> chi.tmp$expected
+   prob.thresholds4
+PD          0         1
+  0 3.4615385 2.5384615
+  1 2.3076923 1.6923077
+  2 2.3076923 1.6923077
+  3 0.5769231 0.4230769
+  4 1.1538462 0.8461538
+  5 1.7307692 1.2692308
+  6 1.7307692 1.2692308
+  7 1.7307692 1.2692308
+```
+
+Collapsing the rows/columns in the contingency table to increase the cell counts is usually suggested as a solution in such cases.
+
+``` r
+> tab.tmp1 <- rbind(tab.tmp["0",]+tab.tmp["1",]+tab.tmp["2",]+tab.tmp["3",],
++                   tab.tmp["4",]+tab.tmp["5",]+tab.tmp["6",]+tab.tmp["7",])
+> chisq.test(tab.tmp1)
+
+	Pearson's Chi-squared test with Yates' continuity correction
+
+data:  tab.tmp1
+X-squared = 22.064, df = 1, p-value = 2.637e-06
+
+Warning message:
+In chisq.test(tab.tmp1) : Chi-squared approximation may be incorrect
+```
+
+However, the assumption at hand seems to violated in this case as well.
+
+``` r
+> tmp$expected
+            0        1
+[1,] 8.653846 6.346154
+[2,] 6.346154 4.653846
+```
+
+The contingency table above confirms that we should use the Fisher’s exact test instead of the chi-square test because 1/4 of the expected cells is below 5.
+
+``` r
+> fisher.values
+  FET1[p-value1] FET2[p-value2] FET3[p-value3] FET4[p-value4]
+1   4.800691e-06    5.45961e-06    5.45961e-06   2.070886e-06
+```
+
+From the output we see that the p-values are less than the significance level.
 
 ## Similarity Between Coders - or Lack Thereof (26)
 
