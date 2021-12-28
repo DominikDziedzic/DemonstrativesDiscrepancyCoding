@@ -357,8 +357,7 @@ Compute the means and store them in the matrix.
 > for (i in 1:length(names)) {
 +   for (j in 1:length(names)) {
 +     temp.vector <- ifelse(data.w[,i]==data.w[,j],1,0)
-+     same.responses.means[i,j] <- mean(temp.vector)
-+   }
++     same.responses.means[i,j] <- mean(temp.vector)}
 + }
 ```
 
