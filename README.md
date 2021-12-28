@@ -17,10 +17,15 @@ Content of the repository (after opening each file, right-click and select Save 
 - **Raw data** 
   - data - Probability per Scenario [in .txt](https://raw.githubusercontent.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/main/data%20-%20Probability%20per%20Scenario.txt) or [.csv format](https://raw.githubusercontent.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/main/data%20-%20Probability%20per%20Scenario.csv) 
   - data - Probability per Coder [in .txt](https://raw.githubusercontent.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/main/data%20-%20Probability%20per%20Coder.txt) or [.csv format](https://raw.githubusercontent.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/main/data%20-%20Probability%20per%20Coder.csv)
-- [**Source code in .R**]()
-- [**Categorization**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#categorization)
-- [**Analysis of the Contingency Table**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding#analysis-of-the-contingency-table)
-- [**Similarity Between Coders (or Lack Thereof)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding#similarity-between-coders-or-lack-thereof)
+- [**Source code in .R**]() TODO
+- **Entire Sample of 26 Scenarios:**
+  - [**Categorization (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#categorization)
+  - [**Analysis of the Contingency Table (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding#analysis-of-the-contingency-table)
+  - [**Similarity Between Coders (or Lack Thereof) (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding#similarity-between-coders-or-lack-thereof)
+- **Revised Sample of 20 Scenarios:**
+  - [**Categorization (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#categorization)
+  - [**Analysis of the Contingency Table (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding#analysis-of-the-contingency-table)
+  - [**Similarity Between Coders (or Lack Thereof) (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding#similarity-between-coders-or-lack-thereof)
 - [**References**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding#references)
 
 ## Required Packages
@@ -41,7 +46,9 @@ library(tidyverse)
 library(lsa)
 ```
 
-## Categorization
+## Entire Sample of 26 Scenarios
+
+## Categorization (26)
 
 ### Import data
 Download raw data, "data - Probability per Scenario", in [.txt](https://raw.githubusercontent.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/main/data%20-%20Probability%20per%20Scenario.txt) or [.csv format](https://raw.githubusercontent.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/main/data%20-%20Probability%20per%20Scenario.csv) and run the following in R to import the data:
@@ -81,11 +88,25 @@ Find the number of observations.
 
 TODO
 
-## Analysis of the Contingency Table
+## Analysis of the Contingency Table (26)
 
 TODO (mention: two categorical variables, justification of choosing the tests)
 
-## Similarity Between Coders (or Lack Thereof)
+## Similarity Between Coders - or Lack Thereof (26)
+
+TODO
+
+## Revised Sample of 20 Scenarios
+
+## Categorization (20)
+
+TODO
+
+## Analysis of the Contingency Table (20)
+
+TODO
+
+## Similarity Between Coders - or Lack Thereof (20)
 
 TODO
 
