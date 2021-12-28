@@ -23,9 +23,9 @@ Content of the repository (after opening each file, right-click and select Save 
   - [**Analysis of the Contingency Table (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#analysis-of-the-contingency-table-26)
   - [**Similarity Between Coders - or Lack Thereof (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#similarity-between-coders---or-lack-thereof-26)
 - **Revised Sample of 20 Scenarios:**
-  - [**Categorization (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#categorization-20)
-  - [**Analysis of the Contingency Table (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#analysis-of-the-contingency-table-20)
-  - [**Similarity Between Coders - or Lack Thereof (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#similarity-between-coders---or-lack-thereof-20)
+  - [**Categorization (20)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#categorization-20)
+  - [**Analysis of the Contingency Table (20)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#analysis-of-the-contingency-table-20)
+  - [**Similarity Between Coders - or Lack Thereof (20)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#similarity-between-coders---or-lack-thereof-20)
 - [**References**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding#references)
 
 ## Required Packages
