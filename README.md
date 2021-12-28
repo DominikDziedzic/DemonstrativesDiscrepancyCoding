@@ -394,7 +394,9 @@ data:  tab.tmp
 X-squared = 15.816, df = 7, p-value = 0.02685
 ```
 
-Check the number of expected cells that are below 5.
+The null hypothesis of homogeneity is rejected, with a p-value < 0.05.
+
+The expected counts in the cells of the table are:
 
 ``` r
 > chi.tmp$expected
@@ -410,7 +412,7 @@ Check the number of expected cells that are below 5.
   Wojciech  16.375 9.625
 ```
 
-TODO: Conclusion regarding p-value < 0.05 and the residuals - compare the latter with cosine sim and Method B)
+Check the residuals: Looking at residuals with largest absolute values gives an idea which cells of the table contribute most to the result.
 
 ``` r
 > chi.tmp$residuals
@@ -425,6 +427,8 @@ TODO: Conclusion regarding p-value < 0.05 and the residuals - compare the latter
   Tadeusz    0.40157134 -0.52378493
   Wojciech   0.40157134 -0.52378493
 ```
+
+The largest discrepancies between observed and expected counts are related to Piotr's and Maciej T.'s answers.
 
 ## Revised Sample of 20 Scenarios
 
