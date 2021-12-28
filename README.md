@@ -51,7 +51,7 @@ library(lsa)
 ## Categorization (26)
 
 ### Import data
-Download raw data, "data - Probability per Scenario", in [.txt](https://raw.githubusercontent.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/main/data%20-%20Probability%20per%20Scenario.txt) or [.csv format](https://raw.githubusercontent.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/main/data%20-%20Probability%20per%20Scenario.csv) and run the following in R to import the data:
+Download raw data: "data - Probability per Scenario" in [.txt](https://raw.githubusercontent.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/main/data%20-%20Probability%20per%20Scenario.txt) or [.csv format](https://raw.githubusercontent.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/main/data%20-%20Probability%20per%20Scenario.csv) and run the following in R to import the data:
 
 ``` r
 # a) if in .txt:
@@ -253,7 +253,179 @@ From the output we see that the p-values are less than the significance level.
 
 ## Similarity Between Coders - or Lack Thereof (26)
 
-TODO
+### Import data
+Download raw data: "data - Probability per Coder" in [.txt](https://raw.githubusercontent.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/main/data%20-%20Probability%20per%20Coder.txt) or [.csv format](https://raw.githubusercontent.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/main/data%20-%20Probability%20per%20Coder.csv) and run the following in R to import the data:
+
+``` r
+# a) if in .txt:
+data <- read.delim(file.choose())
+# b) if in .csv:
+data <- read.csv(file.choose(), sep = ";")
+```
+
+Review the dataset.
+
+``` r
+> head(data.c)
+                      scenario  name response
+1 (Reimer, 1991a, pp. 190–191) Jakub        0
+2        (Perry, 2017, p. 979) Jakub        0
+3    (Siegel, 2002, pp. 10–11) Jakub        1
+4       (McGinn, 1981, p. 162) Jakub        1
+5       (Gauker, 2008, p. 363) Jakub        0
+6                    Dubliners Jakub        0
+```
+
+The dataset consists of 3 variables: scenario ID (mostly in reference format), name of the coder, and his or her response to the categorization question: "Is this a no discrepancy [-d] or possible discrepancy [+d] type of scenario in your opinion?". [-d] is coded here as 0, [+d] as 1.
+
+Transform the dataset into its "wide" form to take a closer look at differences between coders' responses.
+
+``` r
+> data.w <- data.c %>%
++   select(scenario, name, response) %>%
++   spread(name, response)
+> head(data.w)
+                       scenario Jakub Maciej G. Maciej T. Maria Paweł Piotr Tadeusz Wojciech
+1  (Ciecierski, Makowski, 2020)     0         0         0     0     1     0       0        1
+2 (de Gaynesford, 2006, p. 169)     0         0         0     1     1     1       0        0
+3        (Gauker, 2008, p. 363)     0         1         1     1     1     1       1        1
+4        (Kaplan, 1978, p. 239)     0         1         1     1     1     1       0        0
+5          (King, 1999, p. 156)     0         0         0     0     0     1       0        0
+6          (King, 2014, p. 224)     1         1         0     1     1     1       1        0
+```
+
+For ease of calculating, remove the first column from the dataset.
+
+``` r
+> data.w <- data.w[,2:ncol(data.w)]
+```
+
+### Compare the responses to see which pairs of coders give similar answers
+
+Method A) cosine similarity.
+The first method quantifies the similarity between vectors - it measures the cosine of the angle between two vectors in a pair: the smaller the angle, the higher the similarity. It needs vectors to work - create the matrix from the dataset.
+
+``` r
+> matrix.tmp <- data.matrix(data.w)
+```
+
+Compute the cosine similarities.
+
+``` r
+> cosine.sim <- cosine(matrix.tmp)
+```
+
+Remove the superfluous data, and compute the mean and standard deviation.
+
+``` r
+> diag(cosine.sim) = NA
+> mean(cosine.sim, na.rm = TRUE)
+[1] 0.5868093
+> sd(cosine.sim, na.rm = TRUE)
+[1] 0.1388474
+> cosine.sim
+              Jakub Maciej G. Maciej T.     Maria     Paweł     Piotr   Tadeusz  Wojciech
+Jakub            NA 0.4780914 0.1889822 0.5455447 0.6546537 0.4724556 0.6681531 0.6681531
+Maciej G. 0.4780914        NA 0.4743416 0.7302967 0.7302967 0.6324555 0.6708204 0.5590170
+Maciej T. 0.1889822 0.4743416        NA 0.5773503 0.5773503 0.3750000 0.3535534 0.5303301
+Maria     0.5455447 0.7302967 0.5773503        NA 0.8333333 0.7216878 0.6123724 0.6123724
+Paweł     0.6546537 0.7302967 0.5773503 0.8333333        NA 0.6495191 0.6123724 0.8164966
+Piotr     0.4724556 0.6324555 0.3750000 0.7216878 0.6495191        NA 0.6187184 0.4419417
+Tadeusz   0.6681531 0.6708204 0.3535534 0.6123724 0.6123724 0.6187184        NA 0.6250000
+Wojciech  0.6681531 0.5590170 0.5303301 0.6123724 0.8164966 0.4419417 0.6250000        NA
+```
+
+Method B) probability of giving the same answer.
+Try a more direct approach next: for a given pair of coders, find the number of the same answers for each scenario and divide by the number of scenarios to get the probability of giving the same answer.
+
+``` r
+> names <- levels(as.factor(data$name)) # For later use, find all the names of
+> # the coders.
+```
+
+Create a matrix to store the means of each possible pair of coders.
+
+``` r
+> same.responses.means <- matrix(NA, length(names),length(names))
+> dimnames(same.responses.means) <- list(names,names) # Set the row and column 
+> # names of the matrix.
+```
+
+Compute the means and store them in the matrix.
+
+``` r
+> for (i in 1:length(names)) {
++   for (j in 1:length(names)) {
++     temp.vector <- ifelse(data.w[,i]==data.w[,j],1,0)
++     same.responses.means[i,j] <- mean(temp.vector)
++   }
++ }
+```
+
+Remove the superfluous data, and compute the mean and standard deviation.
+
+``` r
+> diag(same.responses.means) = NA
+> mean(same.responses.means, na.rm = TRUE)
+[1] 0.6909341
+> sd(same.responses.means, na.rm = TRUE)
+[1] 0.09920726
+> same.responses.means
+              Jakub Maciej G. Maciej T.     Maria     Paweł     Piotr   Tadeusz  Wojciech
+Jakub            NA 0.6538462 0.6538462 0.6538462 0.7307692 0.5000000 0.8076923 0.8076923
+Maciej G. 0.6538462        NA 0.6923077 0.7692308 0.7692308 0.6153846 0.7692308 0.6923077
+Maciej T. 0.6538462 0.6923077        NA 0.6923077 0.6923077 0.4615385 0.6923077 0.7692308
+Maria     0.6538462 0.7692308 0.6923077        NA 0.8461538 0.6923077 0.6923077 0.6923077
+Paweł     0.7307692 0.7692308 0.6923077 0.8461538        NA 0.6153846 0.6923077 0.8461538
+Piotr     0.5000000 0.6153846 0.4615385 0.6923077 0.6153846        NA 0.6153846 0.4615385
+Tadeusz   0.8076923 0.7692308 0.6923077 0.6923077 0.6923077 0.6153846        NA 0.7692308
+Wojciech  0.8076923 0.6923077 0.7692308 0.6923077 0.8461538 0.4615385 0.7692308        NA
+```
+
+Create the contingency table and calculate the chi-squared statistics.
+
+``` r
+> tab.tmp <- table(data.c$name, data.c$response)
+> chi.tmp <- chisq.test(tab.tmp)
+> chi.tmp
+
+	Pearson's Chi-squared test
+
+data:  tab.tmp
+X-squared = 15.816, df = 7, p-value = 0.02685
+```
+
+Check the number of expected cells that are below 5.
+
+``` r
+> chi.tmp$expected
+           
+                 0     1
+  Jakub     16.375 9.625
+  Maciej G. 16.375 9.625
+  Maciej T. 16.375 9.625
+  Maria     16.375 9.625
+  Paweł     16.375 9.625
+  Piotr     16.375 9.625
+  Tadeusz   16.375 9.625
+  Wojciech  16.375 9.625
+```
+
+TODO: Conclusion regarding p-value < 0.05 and the residuals - compare the latter with cosine sim and Method B)
+
+``` r
+> chi.tmp$residuals
+           
+                      0           1
+  Jakub      0.64869217 -0.84611411
+  Maciej G. -0.09267031  0.12087344
+  Maciej T.  1.39005464 -1.81310167
+  Maria     -0.58691196  0.76553182
+  Paweł     -0.58691196  0.76553182
+  Piotr     -1.57539526  2.05484856
+  Tadeusz    0.40157134 -0.52378493
+  Wojciech   0.40157134 -0.52378493
+```
 
 ## Revised Sample of 20 Scenarios
 
