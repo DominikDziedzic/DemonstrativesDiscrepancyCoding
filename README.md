@@ -120,7 +120,7 @@ data.sort <- data[with(data, order(data$prob.PD, scenario)),]
 ### Plot (26)
 
 ![Categorization output (26)](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/Output/Plot%20(26).png)
-TODO: Description.
+TODO: Description
 
 ## Analysis of the Contingency Table (26)
 
