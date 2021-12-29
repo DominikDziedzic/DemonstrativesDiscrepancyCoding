@@ -434,11 +434,122 @@ The largest discrepancies between observed and expected counts are related to Pi
 
 ## Categorization (20)
 
-TODO
+TODO: Justification for removing some data.
+
+``` r
+> data$scenario[which(data$PD == 0)]
+[1] "Exile and the Kingdom"     "(Textor, 2007, p. 955)"    "The Adventures of Sindbad" "The Loser"                
+[5] "Ulysses"                   "A Spy"       
+```
+
+Remove the specific data.
+
+``` r
+> data.20 <- data[which(data$PD != 0),]
+> levels(as.factor(data.20$scenario))
+ [1] "(Ciecierski, Makowski, 2020)"  "(de Gaynesford, 2006, p. 169)" "(Gauker, 2008, p. 363)"       
+ [4] "(Kaplan, 1978, p. 239)"        "(King, 1999, p. 156)"          "(King, 2014, p. 224)"         
+ [7] "(McGinn, 1981, p. 162)"        "(McGinn, 1981, pp. 161–162)"   "(Perry, 2009, p. 193)"        
+[10] "(Perry, 2017, p. 979)"         "(Radulescu, 2019, p. 15)"      "(Radulescu, 2019, p. 7)"      
+[13] "(Reimer, 1991a, p. 194)"       "(Reimer, 1991a, pp. 190–191)"  "(Reimer, 1991b, p. 180)"      
+[16] "(Reimer, 1991b, p. 182)"       "(Siegel, 2002, pp. 10–11)"     "(Ullman et al., 2012, p. 457)"
+[19] "A Pianist at the Party"        "Dubliners"
+```
+
+Define some "discrimination thresholds", or simply "thresholds", for later use as the legend keys on the plot.
+
+```r
+> data.20$prob.thresholds <- as.factor(ifelse(data.20$prob.PD < 0.5, "0",
++                                       ifelse(data.20$prob.PD == 0.5, "0.5", "1")
++ ))
+```
+
+Specify the order in the dataset: increasing PD.
+
+``` r
+> data.20.sort <- data.20[with(data.20, order(data.20$prob.PD, scenario)),] 
+```
+
+### Plot (20)
+
+![Categorization output (20)](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/Output/Plot%20(20).png)
+TODO: Description.
 
 ## Analysis of the Contingency Table (20)
 
-TODO
+Identify the scenarios that were categorized as ND as often as they were as PD.
+
+``` r
+> data.20$scenario[which(data.20$prob.thresholds == 0.5)]
+[1] "(Reimer, 1991b, p. 180)" "(Perry, 2009, p. 193)"  
+> # One of them is (Reimer, 1991b, p. 180), the other: (Perry, 2009, p. 193).
+> Reimer <- which(data.20$scenario == "(Reimer, 1991b, p. 180)")
+> Perry <- which(data.20$scenario == "(Perry, 2009, p. 193)")
+```
+
+Dataset `data.20` already contains the four possible categorizations: i) both scenarios fall into ND, ii) Reimer's into ND, Perry's into PD, iii) vice versa, iv) both into PD.
+
+``` r
+> data.20[Reimer,c(1,8:11)]
+                  scenario prob.thresholds1 prob.thresholds2 prob.thresholds3 prob.thresholds4
+14 (Reimer, 1991b, p. 180)                0                0                1                1
+> data.20[Perry, c(1,8:11)]
+                scenario prob.thresholds1 prob.thresholds2 prob.thresholds3 prob.thresholds4
+26 (Perry, 2009, p. 193)                0                1                0                1
+```
+
+Perform chi-square and Fisher's tests.
+
+``` r
+> for (i in 1:4){
++   col.tmp <- paste0("prob.thresholds", i)
++   data.20[, col.tmp] <- droplevels(data.20[, col.tmp]) # Clean the variables
++   
++   dat.tmp <- data.20[,c(3,7+i)]
++   tab.tmp <- table(dat.tmp) # Construct contingency tables
++   chi.tmp <- chisq.test(tab.tmp) # Perform chi-square tests
++   Fisher.tmp <- fisher.test(tab.tmp) # Perform Fisher's Exact Test
++   
++   col.tmp <- paste0("Chisq", i, "[p-value", i, "]")
++   chi.values[, col.tmp] <- chi.tmp$p.value # Store the p-values of the tests
++   
++   col.tmp <- paste0("FET", i, "[p-value", i, "]")
++   fisher.values[, col.tmp] <- Fisher.tmp$p.value
++ }
+Warning messages:
+1: In chisq.test(tab.tmp) : Chi-squared approximation may be incorrect
+2: In chisq.test(tab.tmp) : Chi-squared approximation may be incorrect
+3: In chisq.test(tab.tmp) : Chi-squared approximation may be incorrect
+4: In chisq.test(tab.tmp) : Chi-squared approximation may be incorrect
+```
+
+Chi-square test output.
+
+``` r
+> chi.values %>% round(5)
+  Chisq1[p-value1] Chisq2[p-value2] Chisq3[p-value3] Chisq4[p-value4]
+1          0.00277          0.00623          0.00623          0.00277
+> chi.tmp$expected
+   prob.thresholds4
+PD     0    1
+  1 1.80 2.20
+  2 1.80 2.20
+  3 0.45 0.55
+  4 0.90 1.10
+  5 1.35 1.65
+  6 1.35 1.65
+  7 1.35 1.65
+```
+
+R printed out the warning messages - many of the expected cells are below 5. Use Fisher's exact test instead.
+
+``` r
+> fisher.values
+  FET1[p-value1] FET2[p-value2] FET3[p-value3] FET4[p-value4]
+1   6.549178e-05   9.742579e-05   9.742579e-05   6.549178e-05
+```
+
+The null hypothesis of independence is strongly rejected, with a p-value near 0.
 
 ## Similarity Between Coders - or Lack Thereof (20)
 
