@@ -630,16 +630,23 @@ Method B) probability of giving the same answer.
 +     temp.vector <- ifelse(data.w.20[,i]==data.w.20[,j],1,0)
 +     same.responses.means[i,j] <- mean(temp.vector)}
 + }
+> 
+> diag(same.responses.means) = NA # Remove the superfluous data, and compute the 
+> # mean and standard deviation.
+> mean(same.responses.means, na.rm = TRUE)
+[1] 0.5982143
+> sd(same.responses.means, na.rm = TRUE)
+[1] 0.1289694
 > same.responses.means
           Jakub Maciej G. Maciej T. Maria Paweł Piotr Tadeusz Wojciech
-Jakub      1.00      0.55      0.55  0.55  0.65  0.35    0.75     0.75
-Maciej G.  0.55      1.00      0.60  0.70  0.70  0.50    0.70     0.60
-Maciej T.  0.55      0.60      1.00  0.60  0.60  0.30    0.60     0.70
-Maria      0.55      0.70      0.60  1.00  0.80  0.60    0.60     0.60
-Paweł      0.65      0.70      0.60  0.80  1.00  0.50    0.60     0.80
-Piotr      0.35      0.50      0.30  0.60  0.50  1.00    0.50     0.30
-Tadeusz    0.75      0.70      0.60  0.60  0.60  0.50    1.00     0.70
-Wojciech   0.75      0.60      0.70  0.60  0.80  0.30    0.70     1.00
+Jakub        NA      0.55      0.55  0.55  0.65  0.35    0.75     0.75
+Maciej G.  0.55        NA      0.60  0.70  0.70  0.50    0.70     0.60
+Maciej T.  0.55      0.60        NA  0.60  0.60  0.30    0.60     0.70
+Maria      0.55      0.70      0.60    NA  0.80  0.60    0.60     0.60
+Paweł      0.65      0.70      0.60  0.80    NA  0.50    0.60     0.80
+Piotr      0.35      0.50      0.30  0.60  0.50    NA    0.50     0.30
+Tadeusz    0.75      0.70      0.60  0.60  0.60  0.50      NA     0.70
+Wojciech   0.75      0.60      0.70  0.60  0.80  0.30    0.70       NA
 ```
 
 Prepare the data for the chi-squared test.
