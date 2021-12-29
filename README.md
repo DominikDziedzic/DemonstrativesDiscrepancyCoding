@@ -26,6 +26,7 @@ Content of the repository (after opening each file, right-click and select Save 
   - [**Categorization (20)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#categorization-20)
   - [**Analysis of the Contingency Table (20)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#analysis-of-the-contingency-table-20)
   - [**Similarity Between Coders - or Lack Thereof (20)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#similarity-between-coders---or-lack-thereof-20)
+- [**Appendix: (Textor, 2007, p. 955) in place of Dubliners**]()
 - [**References**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding#references)
 
 ## Required Packages
@@ -552,6 +553,10 @@ R printed out the warning messages - many of the expected cells are below 5. Use
 The null hypothesis of independence is strongly rejected, with a p-value near 0.
 
 ## Similarity Between Coders - or Lack Thereof (20)
+
+TODO
+
+## Appendix: (Textor, 2007, p. 955) in place of Dubliners
 
 TODO
 
