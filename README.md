@@ -554,9 +554,153 @@ The null hypothesis of independence is strongly rejected, with a p-value near 0.
 
 ## Similarity Between Coders - or Lack Thereof (20)
 
-TODO
+Prepare "data - Probability per Coder" dataset in its "wide" form anew.
+
+``` r
+> data.w <- data.c %>%
++   select(scenario, name, response) %>%
++   spread(name, response)
+```
+
+Find data for which PD = 0 and remove them.
+
+``` r
+> data.w$PD <- rowSums(data.w[,2:9])
+> data.w$scenario[which(data.w$PD == 0)]
+[1] "(Textor, 2007, p. 955)"    "A Spy"                     "Exile and the Kingdom"     "The Adventures of Sindbad"
+[5] "The Loser"                 "Ulysses"                  
+> data.w.20 <- data.w[which(data.w$PD != 0),]
+> str(data.w.20)
+'data.frame':	20 obs. of  10 variables:
+ $ scenario : chr  "(Ciecierski, Makowski, 2020)" "(de Gaynesford, 2006, p. 169)" "(Gauker, 2008, p. 363)" "(Kaplan, 1978, p. 239)" ...
+ $ Jakub    : int  0 0 0 0 0 1 1 0 0 0 ...
+ $ Maciej G.: int  0 0 1 1 0 1 1 0 1 0 ...
+ $ Maciej T.: int  0 0 1 1 0 0 0 0 0 0 ...
+ $ Maria    : int  0 1 1 1 0 1 0 0 1 1 ...
+ $ Paweł    : int  1 1 1 1 0 1 1 0 0 0 ...
+ $ Piotr    : int  0 1 1 1 1 1 1 1 1 1 ...
+ $ Tadeusz  : int  0 0 1 0 0 1 1 0 1 0 ...
+ $ Wojciech : int  1 0 1 0 0 0 1 0 0 0 ...
+ $ PD       : num  2 3 7 5 1 6 6 1 4 2 ...
+```
+
+For ease of calculating, remove the first column from the dataset.
+
+``` r
+> data.w.20 <- data.w.20[,2:9]
+```
+
+Method A) cosine similarity.
+
+``` r
+> matrix.tmp <- data.matrix(data.w.20)
+> 
+> cosine.sim <- cosine(matrix.tmp) # Compute the cosine similarities.
+> 
+> diag(cosine.sim) = NA # Remove the superfluous data, and compute the mean and 
+> # standard deviation.
+> mean(cosine.sim, na.rm = TRUE)
+[1] 0.5868093
+> sd(cosine.sim, na.rm = TRUE)
+[1] 0.1388474
+> cosine.sim
+              Jakub Maciej G. Maciej T.     Maria     Paweł     Piotr   Tadeusz  Wojciech
+Jakub            NA 0.4780914 0.1889822 0.5455447 0.6546537 0.4724556 0.6681531 0.6681531
+Maciej G. 0.4780914        NA 0.4743416 0.7302967 0.7302967 0.6324555 0.6708204 0.5590170
+Maciej T. 0.1889822 0.4743416        NA 0.5773503 0.5773503 0.3750000 0.3535534 0.5303301
+Maria     0.5455447 0.7302967 0.5773503        NA 0.8333333 0.7216878 0.6123724 0.6123724
+Paweł     0.6546537 0.7302967 0.5773503 0.8333333        NA 0.6495191 0.6123724 0.8164966
+Piotr     0.4724556 0.6324555 0.3750000 0.7216878 0.6495191        NA 0.6187184 0.4419417
+Tadeusz   0.6681531 0.6708204 0.3535534 0.6123724 0.6123724 0.6187184        NA 0.6250000
+Wojciech  0.6681531 0.5590170 0.5303301 0.6123724 0.8164966 0.4419417 0.6250000        NA
+```
+
+Method B) probability of giving the same answer.
+
+``` r
+> names <- levels(as.factor(data.c$name)) # For later use, find all the names of
+> # the coders.
+> 
+> same.responses.means <- matrix(NA, length(names),length(names)) # Matrix
+> dimnames(same.responses.means) <- list(names,names) # Set the row and column 
+> # names of the matrix.
+> 
+> for (i in 1:length(names)) { # Compute the means and store them in the matrix.
++   for (j in 1:length(names)) {
++     temp.vector <- ifelse(data.w.20[,i]==data.w.20[,j],1,0)
++     same.responses.means[i,j] <- mean(temp.vector)}
++ }
+> same.responses.means
+          Jakub Maciej G. Maciej T. Maria Paweł Piotr Tadeusz Wojciech
+Jakub      1.00      0.55      0.55  0.55  0.65  0.35    0.75     0.75
+Maciej G.  0.55      1.00      0.60  0.70  0.70  0.50    0.70     0.60
+Maciej T.  0.55      0.60      1.00  0.60  0.60  0.30    0.60     0.70
+Maria      0.55      0.70      0.60  1.00  0.80  0.60    0.60     0.60
+Paweł      0.65      0.70      0.60  0.80  1.00  0.50    0.60     0.80
+Piotr      0.35      0.50      0.30  0.60  0.50  1.00    0.50     0.30
+Tadeusz    0.75      0.70      0.60  0.60  0.60  0.50    1.00     0.70
+Wojciech   0.75      0.60      0.70  0.60  0.80  0.30    0.70     1.00
+```
+
+Prepare the data for the chi-squared test.
+
+``` r
+> data.tmp <- data.c[which(data.c$scenario != "(Textor, 2007, p. 955)" & 
++              data.c$scenario != "A Spy" &
++              data.c$scenario != "Exile and the Kingdom" &
++              data.c$scenario != "The Adventures of Sindbad" &
++              data.c$scenario != "The Loser" &
++              data.c$scenario != "Ulysses"),]
+> 
+> tab.tmp <- table(data.tmp$name, data.tmp$response) # Construct the contingency 
+> # table
+```
+
+Chi-square test.
+
+``` r
+> chi.tmp <- chisq.test(tab.tmp)
+> chi.tmp
+
+	Pearson's Chi-squared test
+
+data:  tab.tmp
+X-squared = 19.202, df = 7, p-value = 0.007578
+
+> chi.tmp$expected
+           
+                 0     1
+  Jakub     10.375 9.625
+  Maciej G. 10.375 9.625
+  Maciej T. 10.375 9.625
+  Maria     10.375 9.625
+  Paweł     10.375 9.625
+  Piotr     10.375 9.625
+  Tadeusz   10.375 9.625
+  Wojciech  10.375 9.625
+
+> chi.tmp$residuals
+           
+                     0          1
+  Jakub      0.8149581 -0.8461141
+  Maciej G. -0.1164226  0.1208734
+  Maciej T.  1.7463387 -1.8131017
+  Maria     -0.7373430  0.7655318
+  Paweł     -0.7373430  0.7655318
+  Piotr     -1.9791838  2.0548486
+  Tadeusz    0.5044978 -0.5237849
+  Wojciech   0.5044978 -0.5237849
+```
 
 ## Appendix: (Textor, 2007, p. 955) in place of "Dubliners"
+
+One last touch: reduce the sample of scenarios to 20 and replace "Dubliners" with (Textor, 2007, p. 955). "Dubliners" received some alarming comments from the coders.
+
+### Categorization and tests
+
+TODO
+
+### Similarity between coders - or lack thereof
 
 TODO
 
