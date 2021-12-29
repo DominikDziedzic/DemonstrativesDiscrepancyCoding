@@ -562,7 +562,7 @@ Prepare "data - Probability per Coder" dataset in its "wide" form anew.
 +   spread(name, response)
 ```
 
-Find data for which PD = 0 and remove them.
+Find data for which `PD` = 0 and remove them.
 
 ``` r
 > data.w$PD <- rowSums(data.w[,2:9])
