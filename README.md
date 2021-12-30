@@ -858,7 +858,9 @@ Prepare the data for the chi-squared test and perform the test.
 
 data:  tab.tmp
 X-squared = 16.841, df = 7, p-value = 0.01845
+```
 
+``` r
 > chi.tmp$expected
            
                  0     1
