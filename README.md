@@ -125,7 +125,7 @@ TODO: Description.
 
 ## Analysis of the Contingency Table (26)
 
-In what follows, the chi-square and Fisher's exact tests are conducted to determine whether there is an association between two categorical variables: i) the categories assigned by the respondents during the coding process (i.e., `PD`), and ii) the categories shown on the plot (i.e., `prob.thresholds`). The two variables are likely to be statistically related, obviously.
+In what follows, the chi-square and Fisher's exact tests are conducted to determine whether there is an association between two categorical variables: i) the categories assigned by the respondents during the coding process (i.e., `PD`), and ii) the categories shown on the plot (i.e., `prob.thresholds`). The two variables are likely to be statistically related since the latter was determined by arranging the data stored in the former.
 
 Let us address the following question first: How to proceed with scenarios that were categorized as ND as often as they were as PD during the coding process? There are two such scenarios:
 
@@ -705,7 +705,70 @@ One last touch: reduce the sample of scenarios to 20 and replace "Dubliners" wit
 
 ### Categorization and tests
 
-TODO
+``` r
+> data.textor <- data[which(data$scenario != "Dubliners" & 
++                            data$scenario != "A Spy" &
++                            data$scenario != "Exile and the Kingdom" &
++                            data$scenario != "The Adventures of Sindbad" &
++                            data$scenario != "The Loser" &
++                            data$scenario != "Ulysses"),]
+> levels(as.factor(data.textor$scenario))
+ [1] "(Ciecierski, Makowski, 2020)"  "(de Gaynesford, 2006, p. 169)" "(Gauker, 2008, p. 363)"       
+ [4] "(Kaplan, 1978, p. 239)"        "(King, 1999, p. 156)"          "(King, 2014, p. 224)"         
+ [7] "(McGinn, 1981, p. 162)"        "(McGinn, 1981, pp. 161–162)"   "(Perry, 2009, p. 193)"        
+[10] "(Perry, 2017, p. 979)"         "(Radulescu, 2019, p. 15)"      "(Radulescu, 2019, p. 7)"      
+[13] "(Reimer, 1991a, p. 194)"       "(Reimer, 1991a, pp. 190–191)"  "(Reimer, 1991b, p. 180)"      
+[16] "(Reimer, 1991b, p. 182)"       "(Siegel, 2002, pp. 10–11)"     "(Textor, 2007, p. 955)"       
+[19] "(Ullman et al., 2012, p. 457)" "A Pianist at the Party"
+```
+
+Chi-square and Fisher's tests.
+
+``` r
+> for (i in 1:4){
++   #col.tmp <- paste0("prob.thresholds", i)
++   #data.20[, col.tmp] <- droplevels(data.20[, col.tmp]) # Clean the variables
++   
++   dat.tmp <- data.textor[,c(3,7+i)]
++   tab.tmp <- table(dat.tmp) # Construct contingency tables
++   chi.tmp <- chisq.test(tab.tmp) # Perform chi-square tests
++   Fisher.tmp <- fisher.test(tab.tmp) # Perform Fisher's Exact Test
++   
++   col.tmp <- paste0("Chisq", i, "[p-value", i, "]")
++   chi.values[, col.tmp] <- chi.tmp$p.value # Store the p-values of the tests
++   
++   col.tmp <- paste0("FET", i, "[p-value", i, "]")
++   fisher.values[, col.tmp] <- Fisher.tmp$p.value
++ }
+Warning messages:
+1: In chisq.test(tab.tmp) : Chi-squared approximation may be incorrect
+2: In chisq.test(tab.tmp) : Chi-squared approximation may be incorrect
+3: In chisq.test(tab.tmp) : Chi-squared approximation may be incorrect
+4: In chisq.test(tab.tmp) : Chi-squared approximation may be incorrect
+```
+
+``` r
+> chi.values
+  Chisq1[p-value1] Chisq2[p-value2] Chisq3[p-value3] Chisq4[p-value4]
+1      0.005569683          0.01197          0.01197      0.005569683
+> chi.tmp$expected
+   prob.thresholds4
+PD     0    1
+  0 0.45 0.55
+  1 1.80 2.20
+  2 1.35 1.65
+  3 0.45 0.55
+  4 0.90 1.10
+  5 1.35 1.65
+  6 1.35 1.65
+  7 1.35 1.65
+```
+
+``` r
+> fisher.values
+  FET1[p-value1] FET2[p-value2] FET3[p-value3] FET4[p-value4]
+1   0.0001428912   0.0002381519   0.0002381519   0.0001428912
+```
 
 ### Similarity between coders - or lack thereof
 
