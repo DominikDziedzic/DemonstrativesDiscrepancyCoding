@@ -772,7 +772,116 @@ PD     0    1
 
 ### Similarity between coders - or lack thereof
 
-TODO
+Prepare the data.
+
+``` r
+> data.w <- data.c %>%
++   select(scenario, name, response) %>%
++   spread(name, response)
+> 
+> data.w.textor <- data.w[which(data.w$scenario != "Dubliners" & 
++                             data.w$scenario != "A Spy" &
++                             data.w$scenario != "Exile and the Kingdom" &
++                             data.w$scenario != "The Adventures of Sindbad" &
++                             data.w$scenario != "The Loser" &
++                             data.w$scenario != "Ulysses"),]
+> data.w.textor <- data.w.textor[,2:9] # Remove the first column from the dataset.
+```
+
+Method A) cosine similarity.
+
+``` r
+> matrix.tmp <- data.matrix(data.w.textor)
+> cosine.sim <- cosine(matrix.tmp) # Compute the cosine similarities.
+> diag(cosine.sim) = NA # Remove the superfluous data, and compute the mean and 
+> # standard deviation.
+> mean(cosine.sim, na.rm = TRUE)
+[1] 0.5966167
+> sd(cosine.sim, na.rm = TRUE)
+[1] 0.1410904
+> cosine.sim
+              Jakub Maciej G. Maciej T.     Maria     Paweł     Piotr   Tadeusz  Wojciech
+Jakub            NA 0.5039526 0.1889822 0.5455447 0.6546537 0.4879500 0.6681531 0.6681531
+Maciej G. 0.5039526        NA 0.5000000 0.7698004 0.7698004 0.6024641 0.7071068 0.5892557
+Maciej T. 0.1889822 0.5000000        NA 0.5773503 0.5773503 0.3872983 0.3535534 0.5303301
+Maria     0.5455447 0.7698004 0.5773503        NA 0.8333333 0.7453560 0.6123724 0.6123724
+Paweł     0.6546537 0.7698004 0.5773503 0.8333333        NA 0.6708204 0.6123724 0.8164966
+Piotr     0.4879500 0.6024641 0.3872983 0.7453560 0.6708204        NA 0.6390097 0.4564355
+Tadeusz   0.6681531 0.7071068 0.3535534 0.6123724 0.6123724 0.6390097        NA 0.6250000
+Wojciech  0.6681531 0.5892557 0.5303301 0.6123724 0.8164966 0.4564355 0.6250000        NA
+```
+
+Method B) probability of giving the same answer.
+
+``` r
+> names <- levels(as.factor(data.c$name)) # For later use, find all the names of
+> same.responses.means <- matrix(NA, length(names),length(names)) # Matrix
+> dimnames(same.responses.means) <- list(names,names) # Set the row and column 
+> for (i in 1:length(names)) {
++   for (j in 1:length(names)) {
++     temp.vector <- ifelse(data.w.textor[,i]==data.w.textor[,j],1,0)
++     same.responses.means[i,j] <- mean(temp.vector)}
++ }
+> diag(same.responses.means) = NA # Remove the superfluous data, and compute the 
+> # mean and standard deviation.
+> mean(same.responses.means, na.rm = TRUE)
+[1] 0.6196429
+> sd(same.responses.means, na.rm = TRUE)
+[1] 0.1201055
+> same.responses.means
+          Jakub Maciej G. Maciej T. Maria Paweł Piotr Tadeusz Wojciech
+Jakub        NA      0.60      0.55  0.55  0.65  0.40    0.75     0.75
+Maciej G.  0.60        NA      0.65  0.75  0.75  0.50    0.75     0.65
+Maciej T.  0.55      0.65        NA  0.60  0.60  0.35    0.60     0.70
+Maria      0.55      0.75      0.60    NA  0.80  0.65    0.60     0.60
+Paweł      0.65      0.75      0.60  0.80    NA  0.55    0.60     0.80
+Piotr      0.40      0.50      0.35  0.65  0.55    NA    0.55     0.35
+Tadeusz    0.75      0.75      0.60  0.60  0.60  0.55      NA     0.70
+Wojciech   0.75      0.65      0.70  0.60  0.80  0.35    0.70       NA
+```
+
+Prepare the data for the chi-squared test and perform the test.
+
+``` r
+> data.tmp <- data.c[which(data.c$scenario != "Dubliners" & 
++                            data.c$scenario != "A Spy" &
++                            data.c$scenario != "Exile and the Kingdom" &
++                            data.c$scenario != "The Adventures of Sindbad" &
++                            data.c$scenario != "The Loser" &
++                            data.c$scenario != "Ulysses"),]
+> tab.tmp <- table(data.tmp$name, data.tmp$response) # Construct the contingency 
+> # Chi-squared test.
+> chi.tmp <- chisq.test(tab.tmp)
+> chi.tmp
+
+	Pearson's Chi-squared test
+
+data:  tab.tmp
+X-squared = 16.841, df = 7, p-value = 0.01845
+
+> chi.tmp$expected
+           
+                 0     1
+  Jakub     10.625 9.375
+  Maciej G. 10.625 9.375
+  Maciej T. 10.625 9.375
+  Maria     10.625 9.375
+  Paweł     10.625 9.375
+  Piotr     10.625 9.375
+  Tadeusz   10.625 9.375
+  Wojciech  10.625 9.375
+> chi.tmp$residuals
+           
+                     0          1
+  Jakub      0.7286167 -0.7756718
+  Maciej G.  0.1150447 -0.1224745
+  Maciej T.  1.6489747 -1.7554676
+  Maria     -0.8053132  0.8573214
+  Paweł     -0.8053132  0.8573214
+  Piotr     -1.7256712  1.8371173
+  Tadeusz    0.4218307 -0.4490731
+  Wojciech   0.4218307 -0.4490731
+```
 
 ## References
 - McHugh, Mary L. (2013). The Chi-Square Test of Independence. _Biochemia Medica_, _23_(2), 143–149. doi:10.11613/bm.2013.018
