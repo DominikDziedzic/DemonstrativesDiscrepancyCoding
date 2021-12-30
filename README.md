@@ -19,7 +19,7 @@ Content of the repository (after opening each file, right-click and select Save 
   - data - Probability per Coder [in .txt](https://raw.githubusercontent.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/main/data%20-%20Probability%20per%20Coder.txt) or [.csv format](https://raw.githubusercontent.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/main/data%20-%20Probability%20per%20Coder.csv)
 - [**Source code in .R**]() TODO
 
-Table of contents
+Table of contents:
 - **Entire Sample of 26 Scenarios:**
   - [**Categorization (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#categorization-26)
   - [**Analysis of the Contingency Table (26)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#analysis-of-the-contingency-table-26)
