@@ -675,7 +675,9 @@ Chi-square test.
 
 data:  tab.tmp
 X-squared = 19.202, df = 7, p-value = 0.007578
+```
 
+``` r
 > chi.tmp$expected
            
                  0     1
