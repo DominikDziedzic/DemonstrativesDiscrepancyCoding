@@ -11,6 +11,8 @@ To view the form that the coders were requested to fill in, visit:
 - [**Discrepancy Coding Results**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/Discrepancy%20Coding%20Results.pdf) (contains the results and coders' comments on each of the stimulus) or
 - [**Discrepancy Coding Form**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/Discrepancy%20Coding%20FormCLEAN.pdf).
 
+---
+
 **To view the final results of the Coding Procedure, jump to:**
 - [**Final Sample: (Textor, 2007, p. 955) in place of "Dubliners"**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#final-sample-textor-2007-p-955-in-place-of-dubliners)
  ---
