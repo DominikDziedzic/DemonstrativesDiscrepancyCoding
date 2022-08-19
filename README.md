@@ -28,7 +28,7 @@ Table of contents:
   - [**Categorization (20)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#categorization-20)
   - [**Analysis of the Contingency Table (20)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#analysis-of-the-contingency-table-20)
   - [**Similarity Between Coders - or Lack Thereof (20)**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#similarity-between-coders---or-lack-thereof-20)
-- [**Appendix: (Textor, 2007, p. 955) in place of "Dubliners"**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#appendix-textor-2007-p-955-in-place-of-dubliners)
+- [**Final Sample: (Textor, 2007, p. 955) in place of "Dubliners"**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding/blob/main/README.md#appendix-textor-2007-p-955-in-place-of-dubliners)
 - [**References**](https://github.com/DominikDziedzic/DemonstrativesDiscrepancyCoding#references)
 
 ## Required Packages
@@ -703,7 +703,7 @@ X-squared = 19.202, df = 7, p-value = 0.007578
   Wojciech   0.5044978 -0.5237849
 ```
 
-## Appendix: (Textor, 2007, p. 955) in place of "Dubliners"
+## Final Sample: (Textor, 2007, p. 955) in place of "Dubliners"
 
 One last touch: reduce the sample of scenarios to 20 and replace "Dubliners" with (Textor, 2007, p. 955). "Dubliners" received some alarming comments from the coders.
 
